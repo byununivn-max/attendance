@@ -1,0 +1,74 @@
+{
+    "common": {
+        "save": "Lưu",
+        "cancel": "Hủy",
+        "approve": "Phê duyệt",
+        "reject": "Từ chối",
+        "delete": "Xóa",
+        "search": "Tìm kiếm",
+        "download": "Tải xuống",
+        "action": "Hành động",
+        "status": "Trạng thái",
+        "date": "Ngày",
+        "reason": "Lý do",
+        "note": "Ghi chú",
+        "timezone": "Múi giờ: Asia/Ho_Chi_Minh (UTC+7)"
+    },
+    "nav": {
+        "dashboard": "Bảng điều khiển",
+        "dailyAttendance": "Điểm danh hàng ngày",
+        "monthlyReport": "Báo cáo hàng tháng",
+        "corrections": "Yêu cầu chỉnh sửa",
+        "holidays": "Ngày lễ",
+        "devices": "Thiết bị",
+        "settings": "Cài đặt"
+    },
+    "status": {
+        "NORMAL": "Đúng giờ",
+        "LATE": "Đi trễ",
+        "EARLY_LEAVE": "Về sớm",
+        "ABSENT": "Vắng mặt",
+        "MISSED_PUNCH": "Quên chấm công",
+        "HOLIDAY": "Ngày lễ",
+        "PAID_LEAVE": "Nghỉ có phép",
+        "UNPAID_LEAVE": "Nghỉ không phép"
+    },
+    "punch_type": {
+        "IN": "Quên chấm vào",
+        "OUT": "Quên chấm ra",
+        "BOTH": "Quên chấm cả hai"
+    },
+    "dashboard": {
+        "todaySummary": "Tóm tắt hôm nay",
+        "weeklyTrend": "Đường hướng hàng tuần",
+        "pendingCorrections": "Yêu cầu chờ xử lý",
+        "presentCount": "Có mặt",
+        "lateCount": "Đi trễ",
+        "absentCount": "Vắng mặt",
+        "missedCount": "Quên chấm công"
+    },
+    "attendance": {
+        "filterByDate": "Chọn ngày",
+        "filterByDept": "Tất cả phòng ban",
+        "table": {
+            "empCode": "Mã NV",
+            "name": "Tên",
+            "department": "Phòng ban",
+            "checkIn": "Vào",
+            "checkOut": "Ra",
+            "workHours": "Làm việc(h)",
+            "overtime": "Tăng ca(h)",
+            "lateMins": "Đi trễ(p)",
+            "earlyMins": "Về sớm(p)"
+        }
+    },
+    "corrections": {
+        "tabPending": "Chờ xử lý",
+        "tabApproved": "Đã phê duyệt",
+        "tabRejected": "Đã từ chối",
+        "requestTime": "Thời gian yêu cầu",
+        "applyCorrection": "Tạo yêu cầu mới",
+        "selectEmployee": "Tìm nhân viên",
+        "rejectReasonPlaceholder": "Nhập lý do từ chối."
+    }
+}

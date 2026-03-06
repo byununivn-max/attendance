@@ -146,11 +146,15 @@ Table atd_daily_summary [
   late_minutes      INT            [default: 0, note: '지각 시간 (분)']
   early_leave_minutes INT          [default: 0, note: '조퇴 시간 (분)']
   
-  attendance_status VARCHAR(20)    [not null, note: '근태 상태: NORMAL / LATE / EARLY_LEAVE / ABSENT / HOLIDAY / LEAVE']
+  attendance_status VARCHAR(20)    [not null, note: '상태: NORMAL / LATE / EARLY_LEAVE / ABSENT / HOLIDAY / PAID_LEAVE / UNPAID_LEAVE / MISSED_PUNCH']
+  
+  is_missed_punch   BOOLEAN        [default: false, note: '지문인식 누락 여부 (깜빡함)']
+  leave_request_id  BIGINT         [note: 'hr_leave_request FK (휴가 연동 시)']
+  
   is_modified       BOOLEAN        [default: false, note: '수동 수정 여부']
   modified_by       BIGINT         [note: '수정한 관리자 ID']
   
-  note              TEXT           [note: '특이사항']
+  note              TEXT           [note: '특이사항 (예: 휴가 사유, 누락 사유 등)']
   
   created_at        TIMESTAMPTZ    [not null, default: `now()`]
   updated_at        TIMESTAMPTZ    [not null, default: `now()`]
@@ -159,6 +163,40 @@ Table atd_daily_summary [
     (emp_id, work_date) [unique, name: 'uq_atd_summary_emp_date']
     work_date           [name: 'idx_atd_summary_date']
     attendance_status   [name: 'idx_atd_summary_status']
+    leave_request_id    [name: 'idx_atd_summary_leave']
+  }
+}
+
+// -----------------------------------------------------------------------------
+// [신규] 출퇴근 누락 보정 신청 (Punch Correction Request)
+// -----------------------------------------------------------------------------
+Table atd_punch_correction [
+  headercolor: #e67e22,
+  note: '''
+  직원이 지문인식을 깜빡했을 때 제출하는 보정 신청서.
+  승인 시 atd_daily_summary 의 실제 시각(actual_check_in/out)을 업데이트함.
+  '''
+] {
+  correction_id     BIGSERIAL      [pk, note: '보정 PK']
+  emp_id            BIGINT         [not null, note: '신청 직원 FK']
+  work_date         DATE           [not null, note: '누락된 날짜']
+  
+  punch_type        VARCHAR(10)    [not null, note: '누락 유형: IN / OUT / BOTH']
+  requested_time    TIMESTAMPTZ    [not null, note: '실제 출퇴근했다고 주장하는 시각']
+  
+  reason            TEXT           [note: '누락 사유 (예: 지문인식기 오류, 깜빡함)']
+  status            VARCHAR(20)    [not null, default: 'PENDING', note: '상태: PENDING / APPROVED / REJECTED']
+  
+  approved_by       BIGINT         [note: '승인 관리자 FK']
+  approved_at       TIMESTAMPTZ
+  
+  created_at        TIMESTAMPTZ    [not null, default: `now()`]
+  updated_at        TIMESTAMPTZ    [not null, default: `now()`]
+
+  indexes {
+    emp_id          [name: 'idx_punch_corr_emp']
+    work_date       [name: 'idx_punch_corr_date']
+    status          [name: 'idx_punch_corr_status']
   }
 }
 
@@ -191,6 +229,12 @@ Ref: atd_employee_schedule.shift_id > atd_shift.shift_id
 Ref: atd_daily_summary.emp_id > com_employee.emp_id
 Ref: atd_daily_summary.shift_id > atd_shift.shift_id
 
+// HR 모듈 연동 (Cross-Module)
+// Ref: atd_daily_summary.leave_request_id > hr_leave_request.request_id
+
+Ref: atd_punch_correction.emp_id > com_employee.emp_id
+Ref: atd_punch_correction.approved_by > com_employee.emp_id
+
 // =============================================================================
 // TableGroup: 도메인 그룹핑
 // =============================================================================
@@ -207,5 +251,6 @@ TableGroup "근태 설정 및 스케줄 (Settings)" {
 
 TableGroup "근태 정산 결과 (Summary)" {
   atd_daily_summary
+  atd_punch_correction
   atd_holiday
 }

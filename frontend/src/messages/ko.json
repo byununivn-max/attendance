@@ -1,0 +1,74 @@
+{
+    "common": {
+        "save": "저장",
+        "cancel": "취소",
+        "approve": "승인",
+        "reject": "반려",
+        "delete": "삭제",
+        "search": "검색",
+        "download": "다운로드",
+        "action": "액션",
+        "status": "상태",
+        "date": "날짜",
+        "reason": "사유",
+        "note": "비고",
+        "timezone": "기준 시간대: Asia/Ho_Chi_Minh (UTC+7)"
+    },
+    "nav": {
+        "dashboard": "대시보드",
+        "dailyAttendance": "일별 출결 현황",
+        "monthlyReport": "월별 리포트",
+        "corrections": "보정 신청 관리",
+        "holidays": "공휴일 관리",
+        "devices": "장치 관리",
+        "settings": "시스템 설정"
+    },
+    "status": {
+        "NORMAL": "정상출근",
+        "LATE": "지각",
+        "EARLY_LEAVE": "조퇴",
+        "ABSENT": "결근",
+        "MISSED_PUNCH": "누락펀치",
+        "HOLIDAY": "공휴일",
+        "PAID_LEAVE": "연차",
+        "UNPAID_LEAVE": "무급휴가"
+    },
+    "punch_type": {
+        "IN": "출근 누락",
+        "OUT": "퇴근 누락",
+        "BOTH": "출퇴근 누락"
+    },
+    "dashboard": {
+        "todaySummary": "오늘의 출결 요약",
+        "weeklyTrend": "주간 출결 트렌드",
+        "pendingCorrections": "처리 대기중인 보정 신청",
+        "presentCount": "출근 완료",
+        "lateCount": "지각 인원",
+        "absentCount": "결근 인원",
+        "missedCount": "누락 발생"
+    },
+    "attendance": {
+        "filterByDate": "날짜 선택",
+        "filterByDept": "부서 전체",
+        "table": {
+            "empCode": "사번",
+            "name": "이름",
+            "department": "부서",
+            "checkIn": "출근",
+            "checkOut": "퇴근",
+            "workHours": "근무(h)",
+            "overtime": "초과(h)",
+            "lateMins": "지각(분)",
+            "earlyMins": "조퇴(분)"
+        }
+    },
+    "corrections": {
+        "tabPending": "처리 대기",
+        "tabApproved": "승인 완료",
+        "tabRejected": "반려됨",
+        "requestTime": "신청 시각",
+        "applyCorrection": "보정 신청 등록",
+        "selectEmployee": "직원 검색",
+        "rejectReasonPlaceholder": "반려 사유를 입력하세요."
+    }
+}

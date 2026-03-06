@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #137fec;
+    --color-background-light: #f6f7f8;
+    --color-background-dark: #101922;
+  }
+
+  body {
+    min-height: max(884px, 100dvh);
+  }
+}
+
+@layer utilities {
+  .sidebar-item-active {
+    @apply bg-primary/10 text-primary border-r-4 border-primary;
+  }
+
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .border-primary {
+    border-color: var(--color-primary);
+  }
+}

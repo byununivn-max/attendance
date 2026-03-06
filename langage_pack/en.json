@@ -1,0 +1,74 @@
+{
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "approve": "Approve",
+        "reject": "Reject",
+        "delete": "Delete",
+        "search": "Search",
+        "download": "Download",
+        "action": "Action",
+        "status": "Status",
+        "date": "Date",
+        "reason": "Reason",
+        "note": "Note",
+        "timezone": "Timezone: Asia/Ho_Chi_Minh (UTC+7)"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "dailyAttendance": "Daily Attendance",
+        "monthlyReport": "Monthly Report",
+        "corrections": "Punch Corrections",
+        "holidays": "Holidays",
+        "devices": "Devices",
+        "settings": "Settings"
+    },
+    "status": {
+        "NORMAL": "Normal",
+        "LATE": "Late",
+        "EARLY_LEAVE": "Early Leave",
+        "ABSENT": "Absent",
+        "MISSED_PUNCH": "Missed Punch",
+        "HOLIDAY": "Holiday",
+        "PAID_LEAVE": "Paid Leave",
+        "UNPAID_LEAVE": "Unpaid Leave"
+    },
+    "punch_type": {
+        "IN": "Missing Check-in",
+        "OUT": "Missing Check-out",
+        "BOTH": "Missing Both"
+    },
+    "dashboard": {
+        "todaySummary": "Today's Summary",
+        "weeklyTrend": "Weekly Trend",
+        "pendingCorrections": "Pending Corrections",
+        "presentCount": "Present",
+        "lateCount": "Late",
+        "absentCount": "Absent",
+        "missedCount": "Missed Punches"
+    },
+    "attendance": {
+        "filterByDate": "Select Date",
+        "filterByDept": "All Departments",
+        "table": {
+            "empCode": "Emp ID",
+            "name": "Name",
+            "department": "Department",
+            "checkIn": "In",
+            "checkOut": "Out",
+            "workHours": "Work(h)",
+            "overtime": "Overtime(h)",
+            "lateMins": "Late(m)",
+            "earlyMins": "Early(m)"
+        }
+    },
+    "corrections": {
+        "tabPending": "Pending",
+        "tabApproved": "Approved",
+        "tabRejected": "Rejected",
+        "requestTime": "Requested Time",
+        "applyCorrection": "New Request",
+        "selectEmployee": "Search Employee",
+        "rejectReasonPlaceholder": "Enter reason for rejection."
+    }
+}

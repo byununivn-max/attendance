@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+
+# Data / temp
+data/
+*.resolved
+
+# IDE / tools
+.claude/
