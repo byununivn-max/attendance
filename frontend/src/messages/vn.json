@@ -12,7 +12,20 @@
         "date": "Ngày",
         "reason": "Lý do",
         "note": "Ghi chú",
-        "timezone": "Múi giờ: Asia/Ho_Chi_Minh (UTC+7)"
+        "timezone": "Múi giờ: Asia/Ho_Chi_Minh (UTC+7)",
+        "viewAll": "Xem tất cả",
+        "processNow": "Xử lý ngay",
+        "remind": "Nhắc nhở",
+        "addNew": "Thêm mới",
+        "back": "Quay lại",
+        "online": "Trực tuyến",
+        "offline": "Ngoại tuyến",
+        "all": "Tất cả",
+        "year": "Năm",
+        "month": "Tháng",
+        "syncNow": "Đồng bộ ngay",
+        "noData": "Không có dữ liệu",
+        "loading": "Đang tải..."
     },
     "nav": {
         "dashboard": "Bảng điều khiển",
@@ -21,7 +34,8 @@
         "corrections": "Yêu cầu chỉnh sửa",
         "holidays": "Ngày lễ",
         "devices": "Thiết bị",
-        "settings": "Cài đặt"
+        "settings": "Cài đặt",
+        "employees": "Nhân viên"
     },
     "status": {
         "NORMAL": "Đúng giờ",
@@ -45,9 +59,27 @@
         "presentCount": "Có mặt",
         "lateCount": "Đi trễ",
         "absentCount": "Vắng mặt",
-        "missedCount": "Quên chấm công"
+        "missedCount": "Quên chấm công",
+        "percentOfTotal": "% tổng nhân sự",
+        "vsYesterday": "so với hôm qua",
+        "withLeave": "Đã có phép:",
+        "needsAttention": "Cần xử lý ngay",
+        "last7Days": "Tình trạng chấm công 7 ngày gần nhất",
+        "missedList": "Danh sách nhân viên thiếu dữ liệu chấm công",
+        "missedType": "Loại thiếu hụt"
+    },
+    "chart": {
+        "mon": "Thứ 2",
+        "tue": "Thứ 3",
+        "wed": "Thứ 4",
+        "thu": "Thứ 5",
+        "fri": "Thứ 6",
+        "sat": "Thứ 7",
+        "today": "Hôm nay"
     },
     "attendance": {
+        "title": "Điểm danh hàng ngày",
+        "backToList": "Quay lại danh sách",
         "filterByDate": "Chọn ngày",
         "filterByDept": "Tất cả phòng ban",
         "table": {
@@ -62,6 +94,18 @@
             "earlyMins": "Về sớm(p)"
         }
     },
+    "report": {
+        "title": "Báo cáo hàng tháng",
+        "generate": "Tạo báo cáo",
+        "table": {
+            "workDays": "Ngày làm",
+            "normalDays": "Bình thường",
+            "lateDays": "Trễ",
+            "absentDays": "Vắng",
+            "leaveDays": "Nghỉ phép",
+            "overtime": "Tăng ca(h)"
+        }
+    },
     "corrections": {
         "tabPending": "Chờ xử lý",
         "tabApproved": "Đã phê duyệt",
@@ -69,6 +113,58 @@
         "requestTime": "Thời gian yêu cầu",
         "applyCorrection": "Tạo yêu cầu mới",
         "selectEmployee": "Tìm nhân viên",
-        "rejectReasonPlaceholder": "Nhập lý do từ chối."
+        "rejectReasonPlaceholder": "Nhập lý do từ chối.",
+        "correctionDate": "Ngày chỉnh sửa",
+        "punchTime": "Giờ chấm",
+        "employee": "Nhân viên",
+        "form": {
+            "title": "Tạo yêu cầu chỉnh sửa",
+            "type": "Loại thiếu hụt",
+            "correctionDate": "Ngày cần chỉnh sửa",
+            "correctionTime": "Giờ cần chỉnh sửa"
+        }
+    },
+    "holidays": {
+        "title": "Quản lý ngày lễ",
+        "addNew": "Thêm ngày lễ",
+        "countryCode": "Khu vực",
+        "VN": "Việt Nam",
+        "KR": "Hàn Quốc",
+        "BOTH": "Cả hai",
+        "name": "Tên ngày lễ",
+        "loadVN": "Tải ngày lễ VN",
+        "today": "Hôm nay"
+    },
+    "devices": {
+        "title": "Quản lý thiết bị",
+        "ipAddress": "Địa chỉ IP",
+        "port": "Cổng",
+        "lastSync": "Đồng bộ lần cuối",
+        "addDevice": "Thêm thiết bị",
+        "syncNow": "Đồng bộ ngay",
+        "serialNumber": "Số serial",
+        "location": "Vị trí"
+    },
+    "settings": {
+        "title": "Cài đặt hệ thống",
+        "shiftSettings": "Cài đặt ca làm việc",
+        "workdaySettings": "Ngày làm việc mặc định",
+        "generalSettings": "Cài đặt chung",
+        "shiftName": "Tên ca",
+        "startTime": "Giờ vào",
+        "endTime": "Giờ ra",
+        "minWorkHours": "Giờ tối thiểu",
+        "saved": "Đã lưu thành công"
+    },
+    "employees": {
+        "title": "Quản lý nhân viên",
+        "searchPlaceholder": "Tìm theo tên, mã, hoặc email",
+        "viewAttendance": "Xem điểm danh",
+        "table": {
+            "empCode": "Mã NV",
+            "name": "Tên",
+            "email": "Email",
+            "department": "Phòng ban"
+        }
     }
 }

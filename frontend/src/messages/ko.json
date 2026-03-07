@@ -12,7 +12,20 @@
         "date": "날짜",
         "reason": "사유",
         "note": "비고",
-        "timezone": "기준 시간대: Asia/Ho_Chi_Minh (UTC+7)"
+        "timezone": "기준 시간대: Asia/Ho_Chi_Minh (UTC+7)",
+        "viewAll": "전체 보기",
+        "processNow": "처리하기",
+        "remind": "알림 보내기",
+        "addNew": "새로 추가",
+        "back": "뒤로",
+        "online": "온라인",
+        "offline": "오프라인",
+        "all": "전체",
+        "year": "년",
+        "month": "월",
+        "syncNow": "지금 동기화",
+        "noData": "데이터 없음",
+        "loading": "로딩 중..."
     },
     "nav": {
         "dashboard": "대시보드",
@@ -21,7 +34,8 @@
         "corrections": "보정 신청 관리",
         "holidays": "공휴일 관리",
         "devices": "장치 관리",
-        "settings": "시스템 설정"
+        "settings": "시스템 설정",
+        "employees": "직원 관리"
     },
     "status": {
         "NORMAL": "정상출근",
@@ -45,9 +59,27 @@
         "presentCount": "출근 완료",
         "lateCount": "지각 인원",
         "absentCount": "결근 인원",
-        "missedCount": "누락 발생"
+        "missedCount": "누락 발생",
+        "percentOfTotal": "% 전체 인원",
+        "vsYesterday": "어제 대비",
+        "withLeave": "유급 포함:",
+        "needsAttention": "즉시 처리 필요",
+        "last7Days": "최근 7일 출결 현황",
+        "missedList": "출결 데이터 누락 직원 목록",
+        "missedType": "누락 유형"
+    },
+    "chart": {
+        "mon": "월",
+        "tue": "화",
+        "wed": "수",
+        "thu": "목",
+        "fri": "금",
+        "sat": "토",
+        "today": "오늘"
     },
     "attendance": {
+        "title": "일별 출결 현황",
+        "backToList": "목록으로 돌아가기",
         "filterByDate": "날짜 선택",
         "filterByDept": "부서 전체",
         "table": {
@@ -62,6 +94,18 @@
             "earlyMins": "조퇴(분)"
         }
     },
+    "report": {
+        "title": "월별 리포트",
+        "generate": "리포트 생성",
+        "table": {
+            "workDays": "근무일",
+            "normalDays": "정상",
+            "lateDays": "지각",
+            "absentDays": "결근",
+            "leaveDays": "휴가",
+            "overtime": "초과(h)"
+        }
+    },
     "corrections": {
         "tabPending": "처리 대기",
         "tabApproved": "승인 완료",
@@ -69,6 +113,58 @@
         "requestTime": "신청 시각",
         "applyCorrection": "보정 신청 등록",
         "selectEmployee": "직원 검색",
-        "rejectReasonPlaceholder": "반려 사유를 입력하세요."
+        "rejectReasonPlaceholder": "반려 사유를 입력하세요.",
+        "correctionDate": "보정 날짜",
+        "punchTime": "펀치 시각",
+        "employee": "직원",
+        "form": {
+            "title": "보정 신청 등록",
+            "type": "누락 유형",
+            "correctionDate": "보정 날짜",
+            "correctionTime": "보정 시각"
+        }
+    },
+    "holidays": {
+        "title": "공휴일 관리",
+        "addNew": "공휴일 추가",
+        "countryCode": "적용 국가",
+        "VN": "베트남",
+        "KR": "한국",
+        "BOTH": "공통",
+        "name": "공휴일 이름",
+        "loadVN": "베트남 법정공휴일 자동 추가",
+        "today": "오늘"
+    },
+    "devices": {
+        "title": "장치 관리",
+        "ipAddress": "IP 주소",
+        "port": "포트",
+        "lastSync": "마지막 동기화",
+        "addDevice": "장치 추가",
+        "syncNow": "지금 동기화",
+        "serialNumber": "시리얼 번호",
+        "location": "위치"
+    },
+    "settings": {
+        "title": "시스템 설정",
+        "shiftSettings": "근무 시프트 설정",
+        "workdaySettings": "기본 근무일 설정",
+        "generalSettings": "일반 설정",
+        "shiftName": "시프트 이름",
+        "startTime": "출근 시각",
+        "endTime": "퇴근 시각",
+        "minWorkHours": "최소 근무시간",
+        "saved": "저장되었습니다"
+    },
+    "employees": {
+        "title": "직원 관리",
+        "searchPlaceholder": "이름, 사번, 이메일 검색",
+        "viewAttendance": "출결 보기",
+        "table": {
+            "empCode": "사번",
+            "name": "이름",
+            "email": "이메일",
+            "department": "부서"
+        }
     }
 }

@@ -12,7 +12,20 @@
         "date": "Date",
         "reason": "Reason",
         "note": "Note",
-        "timezone": "Timezone: Asia/Ho_Chi_Minh (UTC+7)"
+        "timezone": "Timezone: Asia/Ho_Chi_Minh (UTC+7)",
+        "viewAll": "View All",
+        "processNow": "Process",
+        "remind": "Remind",
+        "addNew": "Add New",
+        "back": "Back",
+        "online": "Online",
+        "offline": "Offline",
+        "all": "All",
+        "year": "Year",
+        "month": "Month",
+        "syncNow": "Sync Now",
+        "noData": "No data",
+        "loading": "Loading..."
     },
     "nav": {
         "dashboard": "Dashboard",
@@ -21,7 +34,8 @@
         "corrections": "Punch Corrections",
         "holidays": "Holidays",
         "devices": "Devices",
-        "settings": "Settings"
+        "settings": "Settings",
+        "employees": "Employees"
     },
     "status": {
         "NORMAL": "Normal",
@@ -45,9 +59,27 @@
         "presentCount": "Present",
         "lateCount": "Late",
         "absentCount": "Absent",
-        "missedCount": "Missed Punches"
+        "missedCount": "Missed Punches",
+        "percentOfTotal": "% of total",
+        "vsYesterday": "vs yesterday",
+        "withLeave": "With leave:",
+        "needsAttention": "Needs attention",
+        "last7Days": "Last 7 days attendance status",
+        "missedList": "Employees with missing attendance data",
+        "missedType": "Missing type"
+    },
+    "chart": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "today": "Today"
     },
     "attendance": {
+        "title": "Daily Attendance",
+        "backToList": "Back to list",
         "filterByDate": "Select Date",
         "filterByDept": "All Departments",
         "table": {
@@ -62,6 +94,18 @@
             "earlyMins": "Early(m)"
         }
     },
+    "report": {
+        "title": "Monthly Report",
+        "generate": "Generate Report",
+        "table": {
+            "workDays": "Work Days",
+            "normalDays": "Normal",
+            "lateDays": "Late",
+            "absentDays": "Absent",
+            "leaveDays": "Leave",
+            "overtime": "Overtime(h)"
+        }
+    },
     "corrections": {
         "tabPending": "Pending",
         "tabApproved": "Approved",
@@ -69,6 +113,58 @@
         "requestTime": "Requested Time",
         "applyCorrection": "New Request",
         "selectEmployee": "Search Employee",
-        "rejectReasonPlaceholder": "Enter reason for rejection."
+        "rejectReasonPlaceholder": "Enter reason for rejection.",
+        "correctionDate": "Correction Date",
+        "punchTime": "Punch Time",
+        "employee": "Employee",
+        "form": {
+            "title": "New Correction Request",
+            "type": "Missing Type",
+            "correctionDate": "Correction Date",
+            "correctionTime": "Correction Time"
+        }
+    },
+    "holidays": {
+        "title": "Holiday Management",
+        "addNew": "Add Holiday",
+        "countryCode": "Country",
+        "VN": "Vietnam",
+        "KR": "Korea",
+        "BOTH": "Both",
+        "name": "Holiday Name",
+        "loadVN": "Load VN Holidays",
+        "today": "Today"
+    },
+    "devices": {
+        "title": "Device Management",
+        "ipAddress": "IP Address",
+        "port": "Port",
+        "lastSync": "Last Sync",
+        "addDevice": "Add Device",
+        "syncNow": "Sync Now",
+        "serialNumber": "Serial Number",
+        "location": "Location"
+    },
+    "settings": {
+        "title": "System Settings",
+        "shiftSettings": "Shift Settings",
+        "workdaySettings": "Default Work Days",
+        "generalSettings": "General Settings",
+        "shiftName": "Shift Name",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "minWorkHours": "Min Work Hours",
+        "saved": "Saved successfully"
+    },
+    "employees": {
+        "title": "Employee Management",
+        "searchPlaceholder": "Search by name, ID, or email",
+        "viewAttendance": "Attendance",
+        "table": {
+            "empCode": "Emp ID",
+            "name": "Name",
+            "email": "Email",
+            "department": "Department"
+        }
     }
 }

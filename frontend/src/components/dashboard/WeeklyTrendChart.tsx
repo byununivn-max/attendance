@@ -2,25 +2,25 @@
 
 import { useTranslation } from '@/lib/i18n';
 
-const chartData = [
-    { label: 'Thứ 2', normal: 85, late: 10, absent: 5 },
-    { label: 'Thứ 3', normal: 85, late: 8, absent: 7 },
-    { label: 'Thứ 4', normal: 90, late: 5, absent: 5 },
-    { label: 'Thứ 5', normal: 75, late: 15, absent: 10 },
-    { label: 'Thứ 6', normal: 82, late: 10, absent: 8 },
-    { label: 'Thứ 7', normal: 40, late: 5, absent: 55, dimmed: true },
-    { label: 'Hôm nay', normal: 88, late: 4, absent: 8 },
-];
-
 export function WeeklyTrendChart() {
     const { t } = useTranslation();
+
+    const chartData = [
+        { labelKey: 'chart.mon', normal: 85, late: 10, absent: 5 },
+        { labelKey: 'chart.tue', normal: 85, late: 8, absent: 7 },
+        { labelKey: 'chart.wed', normal: 90, late: 5, absent: 5 },
+        { labelKey: 'chart.thu', normal: 75, late: 15, absent: 10 },
+        { labelKey: 'chart.fri', normal: 82, late: 10, absent: 8 },
+        { labelKey: 'chart.sat', normal: 40, late: 5, absent: 55, dimmed: true },
+        { labelKey: 'chart.today', normal: 88, late: 4, absent: 8 },
+    ];
 
     return (
         <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div className="flex items-center justify-between mb-8">
                 <div>
                     <h3 className="text-lg font-bold">{t('dashboard.weeklyTrend')}</h3>
-                    <p className="text-sm text-slate-500">Tình trạng chấm công 7 ngày gần nhất</p>
+                    <p className="text-sm text-slate-500">{t('dashboard.last7Days')}</p>
                 </div>
                 <div className="flex gap-4 text-xs font-medium">
                     <div className="flex items-center gap-1.5">
@@ -38,9 +38,9 @@ export function WeeklyTrendChart() {
                 </div>
             </div>
             <div className="h-64 flex items-end justify-between gap-2 px-2">
-                {chartData.map(({ label, normal, late, absent, dimmed }) => (
+                {chartData.map(({ labelKey, normal, late, absent, dimmed }) => (
                     <div
-                        key={label}
+                        key={labelKey}
                         className={`flex-1 flex flex-col items-center gap-2 group cursor-pointer ${dimmed ? 'opacity-50' : ''}`}
                     >
                         <div className="w-full flex flex-col-reverse rounded overflow-hidden h-full">
@@ -57,7 +57,7 @@ export function WeeklyTrendChart() {
                                 style={{ height: `${absent}%` }}
                             ></div>
                         </div>
-                        <span className="text-xs font-medium text-slate-500">{label}</span>
+                        <span className="text-xs font-medium text-slate-500">{t(labelKey)}</span>
                     </div>
                 ))}
             </div>
