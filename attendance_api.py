@@ -67,7 +67,7 @@ if all_attendance_logs:
     print(f"\n📋 Tổng kết:")
     print(f"   - Tổng số records: {len(all_attendance_logs)}")
     print(f"   - Records đầu tiên: {all_attendance_logs[0] if all_attendance_logs else 'None'}")
-print(f"   - Records cuối cùng: {all_attendance_logs[-1] if all_attendance_logs else 'None'}")
+    print(f"   - Records cuối cùng: {all_attendance_logs[-1] if all_attendance_logs else 'None'}")
     print(all_attendance_logs)
 else:
     print("❌ Không có dữ liệu nào được lấy về")
