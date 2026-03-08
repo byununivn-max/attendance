@@ -29,12 +29,12 @@ function MonthCalendar({ year, month, holidays }: { year: number; month: number;
           return (
             <div key={i} className="relative group">
               <div className={["relative text-[11px] w-6 h-6 mx-auto flex items-center justify-center rounded-full overflow-hidden", isToday(d) && !h ? "ring-2 ring-primary font-bold text-primary" : "", !h && wknd ? "text-red-400" : !h ? "text-slate-700 dark:text-slate-300" : "text-white font-bold drop-shadow-md"].join(" ")}>
-                {h && h.countryCode === 'KR' && <img src="https://flagcdn.com/1x1/kr.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="KR" />}
-                {h && h.countryCode === 'VN' && <img src="https://flagcdn.com/1x1/vn.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="VN" />}
+                {h && h.countryCode === 'KR' && <img src="https://flagcdn.com/kr.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="KR" />}
+                {h && h.countryCode === 'VN' && <img src="https://flagcdn.com/vn.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="VN" />}
                 {h && h.countryCode === 'BOTH' && (
                   <div className="absolute inset-0 w-full h-full flex">
-                    <img src="https://flagcdn.com/1x1/vn.svg" className="w-1/2 h-full object-cover border-r border-white/20 brightness-[0.80]" alt="VN" />
-                    <img src="https://flagcdn.com/1x1/kr.svg" className="w-1/2 h-full object-cover brightness-[0.80]" alt="KR" />
+                    <img src="https://flagcdn.com/vn.svg" className="w-1/2 h-full object-cover border-r border-white/20 brightness-[0.80]" alt="VN" />
+                    <img src="https://flagcdn.com/kr.svg" className="w-1/2 h-full object-cover brightness-[0.80]" alt="KR" />
                   </div>
                 )}
                 <span className="relative z-10">{d}</span>
@@ -121,9 +121,9 @@ export default function HolidaysPage() {
       )}
 
       <div className="flex flex-wrap gap-4 text-xs items-center mt-4">
-        <span className="flex items-center gap-1.5"><img src="https://flagcdn.com/1x1/vn.svg" className="w-4 h-4 rounded-full object-cover shadow-sm" alt="VN" />{t("holidays.VN")}</span>
-        <span className="flex items-center gap-1.5"><img src="https://flagcdn.com/1x1/kr.svg" className="w-4 h-4 rounded-full object-cover shadow-sm" alt="KR" />{t("holidays.KR")}</span>
-        <span className="flex items-center gap-1.5"><div className="w-4 h-4 rounded-full overflow-hidden flex shadow-sm"><img src="https://flagcdn.com/1x1/vn.svg" className="w-1/2 h-full object-cover border-r border-slate-200 dark:border-slate-700" alt="VN" /><img src="https://flagcdn.com/1x1/kr.svg" className="w-1/2 h-full object-cover" alt="KR" /></div>{t("holidays.BOTH")}</span>
+        <span className="flex items-center gap-1.5"><img src="https://flagcdn.com/vn.svg" className="w-4 h-4 rounded-full object-cover shadow-sm" alt="VN" />{t("holidays.VN")}</span>
+        <span className="flex items-center gap-1.5"><img src="https://flagcdn.com/kr.svg" className="w-4 h-4 rounded-full object-cover shadow-sm" alt="KR" />{t("holidays.KR")}</span>
+        <span className="flex items-center gap-1.5"><div className="w-4 h-4 rounded-full overflow-hidden flex shadow-sm"><img src="https://flagcdn.com/vn.svg" className="w-1/2 h-full object-cover border-r border-slate-200 dark:border-slate-700" alt="VN" /><img src="https://flagcdn.com/kr.svg" className="w-1/2 h-full object-cover" alt="KR" /></div>{t("holidays.BOTH")}</span>
         <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded-full ring-2 ring-primary inline-block bg-white dark:bg-slate-900 drop-shadow-sm" />{t("holidays.today")}</span>
       </div>
 
@@ -139,12 +139,12 @@ export default function HolidaysPage() {
                 <td className="px-4 py-2.5">{h.date}</td>
                 <td className="px-4 py-2.5">
                   <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                    {h.countryCode === 'KR' && <img src="https://flagcdn.com/1x1/kr.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="KR" />}
-                    {h.countryCode === 'VN' && <img src="https://flagcdn.com/1x1/vn.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="VN" />}
+                    {h.countryCode === 'KR' && <img src="https://flagcdn.com/kr.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="KR" />}
+                    {h.countryCode === 'VN' && <img src="https://flagcdn.com/vn.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="VN" />}
                     {h.countryCode === 'BOTH' && (
                       <div className="w-3.5 h-3.5 rounded-full overflow-hidden flex">
-                        <img src="https://flagcdn.com/1x1/vn.svg" className="w-1/2 h-full object-cover border-r border-slate-200/50" alt="VN" />
-                        <img src="https://flagcdn.com/1x1/kr.svg" className="w-1/2 h-full object-cover" alt="KR" />
+                        <img src="https://flagcdn.com/vn.svg" className="w-1/2 h-full object-cover border-r border-slate-200/50" alt="VN" />
+                        <img src="https://flagcdn.com/kr.svg" className="w-1/2 h-full object-cover" alt="KR" />
                       </div>
                     )}
                     {t("holidays." + h.countryCode)}
