@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import vn from '@/messages/vn.json';
 import ko from '@/messages/ko.json';
 import en from '@/messages/en.json';
@@ -40,7 +40,19 @@ interface I18nContextType {
 const I18nContext = createContext<I18nContextType | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-    const [locale, setLocale] = useState<Locale>('vn');
+    const [locale, setLocaleState] = useState<Locale>('vn');
+
+    useEffect(() => {
+        const saved = localStorage.getItem('preferred_locale') as Locale;
+        if (saved && LOCALE_LABELS[saved]) {
+            setLocaleState(saved);
+        }
+    }, []);
+
+    const setLocale = (newLocale: Locale) => {
+        setLocaleState(newLocale);
+        localStorage.setItem('preferred_locale', newLocale);
+    };
 
     const t = (key: string) => resolve(messages[locale], key);
 
