@@ -3,31 +3,25 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --color-primary: #137fec;
-    --color-background-light: #f6f7f8;
-    --color-background-dark: #101922;
-  }
-
   body {
     min-height: max(884px, 100dvh);
   }
-}
 
-@layer utilities {
-  .sidebar-item-active {
-    @apply bg-primary/10 text-primary border-r-4 border-primary;
-  }
-
-  .bg-primary {
-    background-color: var(--color-primary);
-  }
-
-  .text-primary {
-    color: var(--color-primary);
-  }
-
-  .border-primary {
-    border-color: var(--color-primary);
+  .material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga";
   }
 }

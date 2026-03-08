@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslation, LOCALE_LABELS, type Locale } from "@/lib/i18n";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 
 function formatDate(date: Date): string {
@@ -30,6 +31,7 @@ export function Header() {
   const [showNotif, setShowNotif] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const { data: session } = useSession();
   const notifRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +45,7 @@ export function Header() {
     fetch("/api/corrections?status=PENDING")
       .then((r) => r.json())
       .then((d) => { if (Array.isArray(d)) setNotifications(d.slice(0, 5)); })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   // Close dropdowns on outside click
@@ -121,18 +123,24 @@ export function Header() {
           <button onClick={() => { setShowUser(!showUser); setShowNotif(false); }}
             className="flex items-center gap-3 cursor-pointer group rounded-lg px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
             <div className="text-right hidden md:block">
-              <p className="text-sm font-semibold group-hover:text-primary transition-colors">Administrator</p>
+              <p className="text-sm font-semibold group-hover:text-primary transition-colors">
+                {session?.user?.name || "Administrator"}
+              </p>
               <p className="text-xs text-slate-500">UNI Customs</p>
             </div>
-            <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm border-2 border-slate-100 dark:border-slate-800">
-              A
-            </div>
+            {session?.user?.image ? (
+              <img src={session.user.image} alt="User" className="w-9 h-9 rounded-full object-cover border-2 border-slate-100 dark:border-slate-800" />
+            ) : (
+              <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm border-2 border-slate-100 dark:border-slate-800">
+                {session?.user?.name ? session.user.name.charAt(0).toUpperCase() : "A"}
+              </div>
+            )}
           </button>
           {showUser && (
             <div className="absolute right-0 top-12 w-52 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg z-50 overflow-hidden">
               <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800">
-                <p className="text-sm font-semibold">Administrator</p>
-                <p className="text-xs text-slate-500">admin@eximuni.com</p>
+                <p className="text-sm font-semibold">{session?.user?.name || "Administrator"}</p>
+                <p className="text-xs text-slate-500">{session?.user?.email || "admin@eximuni.com"}</p>
               </div>
               <ul className="py-1">
                 <li>
@@ -143,7 +151,7 @@ export function Header() {
                   </Link>
                 </li>
                 <li>
-                  <button onClick={() => setShowUser(false)}
+                  <button onClick={() => { setShowUser(false); signOut(); }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
                     <span className="material-symbols-outlined text-base">logout</span>
                     Sign out
