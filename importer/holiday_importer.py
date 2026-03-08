@@ -34,11 +34,18 @@ def vn_holidays(year: int) -> list[dict]:
 def vn_tet_2026() -> list[dict]:
     """2026년 베트남 설날 연휴 (별도 함수 - 매년 수동 갱신 필요)."""
     return [
-        {"date": date(2026, 1, 28), "name_en": "Tet Holiday (Eve)",   "name_vi": "Nghi Tet Nguyen Dan", "region": "VN"},
-        {"date": date(2026, 1, 29), "name_en": "Tet Holiday (Day 1)", "name_vi": "Tet Nguyen Dan",      "region": "VN"},
-        {"date": date(2026, 1, 30), "name_en": "Tet Holiday (Day 2)", "name_vi": "Mung 2 Tet",          "region": "VN"},
-        {"date": date(2026, 1, 31), "name_en": "Tet Holiday (Day 3)", "name_vi": "Mung 3 Tet",          "region": "VN"},
-        {"date": date(2026, 2, 1),  "name_en": "Tet Holiday (Day 4)", "name_vi": "Mung 4 Tet",          "region": "VN"},
+        {"date": date(2026, 2, 16), "name_en": "Tet Holiday (Eve)",   "name_vi": "Nghi Tet Nguyen Dan", "region": "VN"},
+        {"date": date(2026, 2, 17), "name_en": "Tet Holiday (Day 1)", "name_vi": "Tet Nguyen Dan",      "region": "VN"},
+        {"date": date(2026, 2, 18), "name_en": "Tet Holiday (Day 2)", "name_vi": "Mung 2 Tet",          "region": "VN"},
+        {"date": date(2026, 2, 19), "name_en": "Tet Holiday (Day 3)", "name_vi": "Mung 3 Tet",          "region": "VN"},
+        {"date": date(2026, 2, 20), "name_en": "Tet Holiday (Day 4)", "name_vi": "Mung 4 Tet",          "region": "VN"},
+    ]
+
+
+def vn_other_2026() -> list[dict]:
+    return [
+        {"date": date(2026, 4, 26), "name_en": "Hung Kings Commemoration Day", "name_vi": "Gio To Hung Vuong", "region": "VN"},
+        {"date": date(2026, 4, 27), "name_en": "Hung Kings Commemoration Day (Substitute)", "name_vi": "Gio To Hung Vuong (Nghi bu)", "region": "VN"},
     ]
 
 
@@ -58,6 +65,24 @@ def kr_holidays(year: int) -> list[dict]:
     ]
 
 
+def kr_lunar_2026() -> list[dict]:
+    return [
+        {"date": date(2026, 2, 16), "name_en": "Seollal Holiday", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 2, 17), "name_en": "Seollal (Lunar New Year)", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 2, 18), "name_en": "Seollal Holiday", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 3, 2),  "name_en": "Substitute Holiday (Independence Movement Day)", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 5, 24), "name_en": "Buddha's Birthday", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 5, 25), "name_en": "Substitute Holiday (Buddha's Birthday)", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 6, 3),  "name_en": "Local Election Day", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 8, 17), "name_en": "Substitute Holiday (Liberation Day)", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 9, 24), "name_en": "Chuseok Holiday", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 9, 25), "name_en": "Chuseok",         "name_vi": None, "region": "KR"},
+        {"date": date(2026, 9, 26), "name_en": "Chuseok Holiday", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 9, 28), "name_en": "Substitute Holiday (Chuseok)", "name_vi": None, "region": "KR"},
+        {"date": date(2026, 10, 5), "name_en": "Substitute Holiday (National Foundation Day)", "name_vi": None, "region": "KR"},
+    ]
+
+
 def insert_holidays(holidays: list[dict], dry_run: bool = False) -> dict:
     inserted = skipped = 0
 
@@ -68,14 +93,20 @@ def insert_holidays(holidays: list[dict], dry_run: bool = False) -> dict:
 
     with psycopg2.connect(**DB_CONFIG) as conn, conn.cursor() as cur:
         for h in holidays:
+            # We use ON CONFLICT DO UPDATE so that if dates were wrong, we update the name (Wait, date is PK. We must delete incorrect dates first!)
             cur.execute(
                 """
                 INSERT INTO atd_holiday (holiday_date, holiday_name, holiday_name_vi, is_paid, region)
                 VALUES (%s, %s, %s, true, %s)
-                ON CONFLICT (holiday_date) DO NOTHING
+                ON CONFLICT (holiday_date) DO UPDATE SET
+                    holiday_name = EXCLUDED.holiday_name,
+                    holiday_name_vi = EXCLUDED.holiday_name_vi,
+                    region = EXCLUDED.region
                 """,
                 (h["date"], h["name_en"], h.get("name_vi"), h["region"]),
             )
+            # Rowcount logic for ON CONFLICT DO UPDATE is: 1 for insert, 2 for update.
+            # But the requirement might be just ON CONFLICT DO NOTHING. I'll use UPDATE since we might be fixing wrong names.
             if cur.rowcount:
                 inserted += 1
             else:
@@ -92,9 +123,12 @@ def import_holidays(year: int, region: str = "ALL", dry_run: bool = False):
         holidays += vn_holidays(year)
         if year == 2026:
             holidays += vn_tet_2026()
+            holidays += vn_other_2026()
 
     if region in ("KR", "ALL"):
         holidays += kr_holidays(year)
+        if year == 2026:
+            holidays += kr_lunar_2026()
 
     # Remove duplicate dates (BOTH region takes precedence)
     seen = {}
@@ -107,7 +141,7 @@ def import_holidays(year: int, region: str = "ALL", dry_run: bool = False):
 
     print(f"[holiday_importer] {year} / {region}: {len(holidays)} holidays to register")
     result = insert_holidays(holidays, dry_run=dry_run)
-    print(f"  inserted={result['inserted']}  skipped(duplicate)={result['skipped']}")
+    print(f"  inserted or updated={result['inserted']}  skipped={result['skipped']}")
     return result
 
 

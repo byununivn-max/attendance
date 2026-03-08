@@ -36,13 +36,11 @@ export function Sidebar() {
                         <Link
                             key={href}
                             href={href}
-                            className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors ${
-                                isActive
+                            className={`flex items-center px-4 py-3 rounded-lg transition-colors ${isActive
                                     ? 'bg-primary/10 text-primary font-semibold'
                                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                            }`}
+                                }`}
                         >
-                            <span className="material-symbols-outlined">{icon}</span>
                             <span>{t(key)}</span>
                         </Link>
                     );
@@ -52,11 +50,10 @@ export function Sidebar() {
             <div className="p-4 mt-auto border-t border-slate-200 dark:border-slate-800">
                 <Link
                     href="/settings"
-                    className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors ${
-                        pathname === '/settings'
+                    className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors ${pathname === '/settings'
                             ? 'bg-primary/10 text-primary font-semibold'
                             : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                    }`}
+                        }`}
                 >
                     <span className="material-symbols-outlined">settings</span>
                     <span>{t('nav.settings')}</span>

@@ -27,10 +27,9 @@ export function MobileNav() {
                         <Link
                             key={href}
                             href={href}
-                            className={`flex flex-col items-center gap-1 ${isActive ? 'text-primary' : 'text-slate-400'}`}
+                            className={`flex flex-col items-center justify-center p-2 flex-1 ${isActive ? 'text-primary' : 'text-slate-400'}`}
                         >
-                            <span className="material-symbols-outlined text-[22px]">{icon}</span>
-                            <span className="text-[9px] font-medium truncate max-w-[48px] text-center">{t(key)}</span>
+                            <span className="text-xs font-medium text-center">{t(key)}</span>
                         </Link>
                     );
                 })}

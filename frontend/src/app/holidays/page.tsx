@@ -4,20 +4,20 @@ import { useTranslation } from "@/lib/i18n";
 
 interface Holiday { id: number; name: string; date: string; countryCode: string; }
 
-const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const DOW = ["Su","Mo","Tu","We","Th","Fr","Sa"];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const DOW = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
-function MonthCalendar({ year, month, holidays }: { year:number; month:number; holidays:Holiday[] }) {
+function MonthCalendar({ year, month, holidays }: { year: number; month: number; holidays: Holiday[] }) {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const hMap: Record<number, Holiday> = {};
-  holidays.forEach(h => { const d = new Date(h.date); if (d.getFullYear()===year && d.getMonth()===month) hMap[d.getDate()]=h; });
-  const cells: (number|null)[] = Array(firstDay).fill(null);
+  holidays.forEach(h => { const d = new Date(h.date); if (d.getFullYear() === year && d.getMonth() === month) hMap[d.getDate()] = h; });
+  const cells: (number | null)[] = Array(firstDay).fill(null);
   for (let d = 1; d <= daysInMonth; d++) cells.push(d);
   while (cells.length % 7 !== 0) cells.push(null);
   const now = new Date();
-  const isToday = (d: number) => now.getFullYear()===year && now.getMonth()===month && now.getDate()===d;
-  const ccBg = (cc: string) => cc==="VN" ? "bg-red-500 text-white" : cc==="KR" ? "bg-blue-500 text-white" : "bg-purple-500 text-white";
+  const isToday = (d: number) => now.getFullYear() === year && now.getMonth() === month && now.getDate() === d;
+  const ccBg = (cc: string) => cc === "VN" ? "bg-red-500 text-white" : cc === "KR" ? "bg-blue-500 text-white" : "bg-purple-500 text-white";
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-3">
       <div className="text-sm font-bold text-center mb-2">{MONTHS[month]}</div>
@@ -25,10 +25,20 @@ function MonthCalendar({ year, month, holidays }: { year:number; month:number; h
         {DOW.map(d => <div key={d} className="text-[9px] font-bold text-slate-400 pb-1">{d}</div>)}
         {cells.map((d, i) => {
           if (!d) return <div key={i} />;
-          const h = hMap[d]; const dow = (firstDay + d - 1) % 7; const wknd = dow===0||dow===6;
+          const h = hMap[d]; const dow = (firstDay + d - 1) % 7; const wknd = dow === 0 || dow === 6;
           return (
             <div key={i} className="relative group">
-              <div className={["text-[11px] w-6 h-6 mx-auto flex items-center justify-center rounded-full",h?ccBg(h.countryCode):"",isToday(d)&&!h?"ring-2 ring-primary font-bold":"",!h&&wknd?"text-red-400":!h?"text-slate-700 dark:text-slate-300":""].join(" ")}>{d}</div>
+              <div className={["relative text-[11px] w-6 h-6 mx-auto flex items-center justify-center rounded-full overflow-hidden", isToday(d) && !h ? "ring-2 ring-primary font-bold text-primary" : "", !h && wknd ? "text-red-400" : !h ? "text-slate-700 dark:text-slate-300" : "text-white font-bold drop-shadow-md"].join(" ")}>
+                {h && h.countryCode === 'KR' && <img src="https://flagcdn.com/1x1/kr.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="KR" />}
+                {h && h.countryCode === 'VN' && <img src="https://flagcdn.com/1x1/vn.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="VN" />}
+                {h && h.countryCode === 'BOTH' && (
+                  <div className="absolute inset-0 w-full h-full flex">
+                    <img src="https://flagcdn.com/1x1/vn.svg" className="w-1/2 h-full object-cover border-r border-white/20 brightness-[0.80]" alt="VN" />
+                    <img src="https://flagcdn.com/1x1/kr.svg" className="w-1/2 h-full object-cover brightness-[0.80]" alt="KR" />
+                  </div>
+                )}
+                <span className="relative z-10">{d}</span>
+              </div>
               {h && <div className="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-slate-900 text-white text-[10px] rounded px-2 py-1 whitespace-nowrap">{h.name}</div>}
             </div>
           );
@@ -49,14 +59,14 @@ export default function HolidaysPage() {
 
   const fetchHolidays = useCallback(() => {
     setLoading(true);
-    fetch("/api/holidays?year=" + year).then(r => r.json()).then((d: unknown) => { if (Array.isArray(d)) setHolidays(d as Holiday[]); }).catch(() => {}).finally(() => setLoading(false));
+    fetch("/api/holidays?year=" + year).then(r => r.json()).then((d: unknown) => { if (Array.isArray(d)) setHolidays(d as Holiday[]); }).catch(() => { }).finally(() => setLoading(false));
   }, [year]);
 
   useEffect(() => { fetchHolidays(); }, [fetchHolidays]);
 
   const handleLoadVN = async () => {
     setLoadingVN(true);
-    await fetch("/api/holidays/load-vn?year=" + year, { method: "POST" }).catch(() => {});
+    await fetch("/api/holidays/load-vn?year=" + year, { method: "POST" }).catch(() => { });
     await fetchHolidays();
     setLoadingVN(false);
   };
@@ -71,12 +81,11 @@ export default function HolidaysPage() {
   };
 
   const handleDelete = async (id: number) => {
-    await fetch("/api/holidays/" + id, { method: "DELETE" }).catch(() => {});
+    await fetch("/api/holidays/" + id, { method: "DELETE" }).catch(() => { });
     setHolidays(h => h.filter(x => x.id !== id));
   };
 
   const yearHolidays = holidays.filter(h => new Date(h.date).getFullYear() === year);
-  const ccBg = (cc: string) => cc==="VN" ? "bg-red-500" : cc==="KR" ? "bg-blue-500" : "bg-purple-500";
 
   return (
     <div className="p-4 lg:p-8 space-y-6">
@@ -97,9 +106,9 @@ export default function HolidaysPage() {
 
       {showForm && (
         <form onSubmit={handleAdd} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex flex-wrap gap-3 items-end">
-          <div className="flex-1 min-w-48"><label className="block text-sm font-medium mb-1">{t("holidays.name")}</label><input value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} required className="w-full border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-transparent outline-none" /></div>
-          <div><label className="block text-sm font-medium mb-1">{t("common.date")}</label><input type="date" value={form.date} onChange={e => setForm(f => ({...f, date: e.target.value}))} required className="border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-transparent outline-none" /></div>
-          <div><label className="block text-sm font-medium mb-1">{t("holidays.countryCode")}</label><select value={form.countryCode} onChange={e => setForm(f => ({...f, countryCode: e.target.value}))} className="border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-900 outline-none">{["VN","KR","BOTH"].map(c => <option key={c} value={c}>{t("holidays."+c)}</option>)}</select></div>
+          <div className="flex-1 min-w-48"><label className="block text-sm font-medium mb-1">{t("holidays.name")}</label><input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required className="w-full border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-transparent outline-none" /></div>
+          <div><label className="block text-sm font-medium mb-1">{t("common.date")}</label><input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required className="border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-transparent outline-none" /></div>
+          <div><label className="block text-sm font-medium mb-1">{t("holidays.countryCode")}</label><select value={form.countryCode} onChange={e => setForm(f => ({ ...f, countryCode: e.target.value }))} className="border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-900 outline-none">{["VN", "KR", "BOTH"].map(c => <option key={c} value={c}>{t("holidays." + c)}</option>)}</select></div>
           <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold">{t("common.save")}</button>
           <button type="button" onClick={() => setShowForm(false)} className="border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-lg text-sm">{t("common.cancel")}</button>
         </form>
@@ -111,24 +120,36 @@ export default function HolidaysPage() {
         </div>
       )}
 
-      <div className="flex flex-wrap gap-4 text-xs items-center">
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-red-500 inline-block" />{t("holidays.VN")}</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-blue-500 inline-block" />{t("holidays.KR")}</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-purple-500 inline-block" />{t("holidays.BOTH")}</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full ring-2 ring-primary inline-block" />{t("holidays.today")}</span>
+      <div className="flex flex-wrap gap-4 text-xs items-center mt-4">
+        <span className="flex items-center gap-1.5"><img src="https://flagcdn.com/1x1/vn.svg" className="w-4 h-4 rounded-full object-cover shadow-sm" alt="VN" />{t("holidays.VN")}</span>
+        <span className="flex items-center gap-1.5"><img src="https://flagcdn.com/1x1/kr.svg" className="w-4 h-4 rounded-full object-cover shadow-sm" alt="KR" />{t("holidays.KR")}</span>
+        <span className="flex items-center gap-1.5"><div className="w-4 h-4 rounded-full overflow-hidden flex shadow-sm"><img src="https://flagcdn.com/1x1/vn.svg" className="w-1/2 h-full object-cover border-r border-slate-200 dark:border-slate-700" alt="VN" /><img src="https://flagcdn.com/1x1/kr.svg" className="w-1/2 h-full object-cover" alt="KR" /></div>{t("holidays.BOTH")}</span>
+        <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded-full ring-2 ring-primary inline-block bg-white dark:bg-slate-900 drop-shadow-sm" />{t("holidays.today")}</span>
       </div>
 
       <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         <table className="w-full text-left border-collapse text-sm">
           <thead><tr className="bg-slate-50 dark:bg-slate-800/50">
-            {["holidays.name","common.date","holidays.countryCode","common.action"].map(k => <th key={k} className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">{t(k)}</th>)}
+            {["holidays.name", "common.date", "holidays.countryCode", "common.action"].map(k => <th key={k} className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">{t(k)}</th>)}
           </tr></thead>
           <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-            {[...yearHolidays].sort((a,b)=>a.date.localeCompare(b.date)).map(h => (
+            {[...yearHolidays].sort((a, b) => a.date.localeCompare(b.date)).map(h => (
               <tr key={h.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30">
                 <td className="px-4 py-2.5 font-medium">{h.name}</td>
                 <td className="px-4 py-2.5">{h.date}</td>
-                <td className="px-4 py-2.5"><span className={"inline-flex px-2 py-0.5 rounded-full text-xs font-medium text-white "+ccBg(h.countryCode)}>{t("holidays."+h.countryCode)}</span></td>
+                <td className="px-4 py-2.5">
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    {h.countryCode === 'KR' && <img src="https://flagcdn.com/1x1/kr.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="KR" />}
+                    {h.countryCode === 'VN' && <img src="https://flagcdn.com/1x1/vn.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="VN" />}
+                    {h.countryCode === 'BOTH' && (
+                      <div className="w-3.5 h-3.5 rounded-full overflow-hidden flex">
+                        <img src="https://flagcdn.com/1x1/vn.svg" className="w-1/2 h-full object-cover border-r border-slate-200/50" alt="VN" />
+                        <img src="https://flagcdn.com/1x1/kr.svg" className="w-1/2 h-full object-cover" alt="KR" />
+                      </div>
+                    )}
+                    {t("holidays." + h.countryCode)}
+                  </span>
+                </td>
                 <td className="px-4 py-2.5"><button onClick={() => handleDelete(h.id)} className="text-red-600 hover:bg-red-50 px-2 py-1 rounded text-xs font-medium">{t("common.delete")}</button></td>
               </tr>
             ))}
