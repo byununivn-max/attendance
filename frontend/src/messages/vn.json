@@ -127,7 +127,7 @@
     "holidays": {
         "title": "Quản lý ngày lễ",
         "addNew": "Thêm ngày lễ",
-        "countryCode": "Khu vực",
+        "country": "Khu vực",
         "VN": "Việt Nam",
         "KR": "Hàn Quốc",
         "BOTH": "Cả hai",

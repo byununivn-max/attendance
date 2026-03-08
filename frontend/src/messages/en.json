@@ -127,7 +127,7 @@
     "holidays": {
         "title": "Holiday Management",
         "addNew": "Add Holiday",
-        "countryCode": "Country",
+        "country": "Country",
         "VN": "Vietnam",
         "KR": "Korea",
         "BOTH": "Both",

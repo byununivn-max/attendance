@@ -127,7 +127,7 @@
     "holidays": {
         "title": "공휴일 관리",
         "addNew": "공휴일 추가",
-        "countryCode": "적용 국가",
+        "country": "적용 국가",
         "VN": "베트남",
         "KR": "한국",
         "BOTH": "공통",

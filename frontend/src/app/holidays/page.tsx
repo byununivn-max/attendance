@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "@/lib/i18n";
 
-interface Holiday { id: number; name: string; date: string; countryCode: string; }
+interface Holiday { id: number; name: string; date: string; country: string; }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DOW = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -29,9 +29,9 @@ function MonthCalendar({ year, month, holidays }: { year: number; month: number;
           return (
             <div key={i} className="relative group">
               <div className={["relative text-[11px] w-6 h-6 mx-auto flex items-center justify-center rounded-full overflow-hidden", isToday(d) && !h ? "ring-2 ring-primary font-bold text-primary" : "", !h && wknd ? "text-red-400" : !h ? "text-slate-700 dark:text-slate-300" : "text-white font-bold drop-shadow-md"].join(" ")}>
-                {h && h.countryCode === 'KR' && <img src="https://flagcdn.com/kr.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="KR" />}
-                {h && h.countryCode === 'VN' && <img src="https://flagcdn.com/vn.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="VN" />}
-                {h && h.countryCode === 'BOTH' && (
+                {h && h.country === 'KR' && <img src="https://flagcdn.com/kr.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="KR" />}
+                {h && h.country === 'VN' && <img src="https://flagcdn.com/vn.svg" className="absolute inset-0 w-full h-full object-cover brightness-[0.80]" alt="VN" />}
+                {h && h.country === 'BOTH' && (
                   <div className="absolute inset-0 w-full h-full flex">
                     <img src="https://flagcdn.com/vn.svg" className="w-1/2 h-full object-cover border-r border-white/20 brightness-[0.80]" alt="VN" />
                     <img src="https://flagcdn.com/kr.svg" className="w-1/2 h-full object-cover brightness-[0.80]" alt="KR" />
@@ -52,7 +52,7 @@ export default function HolidaysPage() {
   const { t } = useTranslation();
   const [year, setYear] = useState(new Date().getFullYear());
   const [holidays, setHolidays] = useState<Holiday[]>([]);
-  const [form, setForm] = useState({ name: "", date: "", countryCode: "VN" });
+  const [form, setForm] = useState({ name: "", date: "", country: "VN" });
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingVN, setLoadingVN] = useState(false);
@@ -76,7 +76,7 @@ export default function HolidaysPage() {
     const res = await fetch("/api/holidays", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }).catch(() => null);
     if (res && res.ok) { const created = await res.json(); setHolidays(h => [...h, created]); }
     else { setHolidays(h => [...h, { id: Date.now(), ...form }]); }
-    setForm({ name: "", date: "", countryCode: "VN" });
+    setForm({ name: "", date: "", country: "VN" });
     setShowForm(false);
   };
 
@@ -108,7 +108,7 @@ export default function HolidaysPage() {
         <form onSubmit={handleAdd} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex flex-wrap gap-3 items-end">
           <div className="flex-1 min-w-48"><label className="block text-sm font-medium mb-1">{t("holidays.name")}</label><input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required className="w-full border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-transparent outline-none" /></div>
           <div><label className="block text-sm font-medium mb-1">{t("common.date")}</label><input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required className="border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-transparent outline-none" /></div>
-          <div><label className="block text-sm font-medium mb-1">{t("holidays.countryCode")}</label><select value={form.countryCode} onChange={e => setForm(f => ({ ...f, countryCode: e.target.value }))} className="border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-900 outline-none">{["VN", "KR", "BOTH"].map(c => <option key={c} value={c}>{t("holidays." + c)}</option>)}</select></div>
+          <div><label className="block text-sm font-medium mb-1">{t("holidays.country")}</label><select value={form.country} onChange={e => setForm(f => ({ ...f, country: e.target.value }))} className="border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm bg-white dark:bg-slate-900 outline-none">{["VN", "KR", "BOTH"].map(c => <option key={c} value={c}>{t("holidays." + c)}</option>)}</select></div>
           <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold">{t("common.save")}</button>
           <button type="button" onClick={() => setShowForm(false)} className="border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-lg text-sm">{t("common.cancel")}</button>
         </form>
@@ -130,7 +130,7 @@ export default function HolidaysPage() {
       <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         <table className="w-full text-left border-collapse text-sm">
           <thead><tr className="bg-slate-50 dark:bg-slate-800/50">
-            {["holidays.name", "common.date", "holidays.countryCode", "common.action"].map(k => <th key={k} className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">{t(k)}</th>)}
+            {["holidays.name", "common.date", "holidays.country", "common.action"].map(k => <th key={k} className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">{t(k)}</th>)}
           </tr></thead>
           <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
             {[...yearHolidays].sort((a, b) => a.date.localeCompare(b.date)).map(h => (
@@ -139,15 +139,15 @@ export default function HolidaysPage() {
                 <td className="px-4 py-2.5">{h.date}</td>
                 <td className="px-4 py-2.5">
                   <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                    {h.countryCode === 'KR' && <img src="https://flagcdn.com/kr.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="KR" />}
-                    {h.countryCode === 'VN' && <img src="https://flagcdn.com/vn.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="VN" />}
-                    {h.countryCode === 'BOTH' && (
+                    {h.country === 'KR' && <img src="https://flagcdn.com/kr.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="KR" />}
+                    {h.country === 'VN' && <img src="https://flagcdn.com/vn.svg" className="w-3.5 h-3.5 rounded-full object-cover" alt="VN" />}
+                    {h.country === 'BOTH' && (
                       <div className="w-3.5 h-3.5 rounded-full overflow-hidden flex">
                         <img src="https://flagcdn.com/vn.svg" className="w-1/2 h-full object-cover border-r border-slate-200/50" alt="VN" />
                         <img src="https://flagcdn.com/kr.svg" className="w-1/2 h-full object-cover" alt="KR" />
                       </div>
                     )}
-                    {t("holidays." + h.countryCode)}
+                    {t("holidays." + h.country)}
                   </span>
                 </td>
                 <td className="px-4 py-2.5"><button onClick={() => handleDelete(h.id)} className="text-red-600 hover:bg-red-50 px-2 py-1 rounded text-xs font-medium">{t("common.delete")}</button></td>
