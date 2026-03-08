@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="vi" className="light">
       <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
       <body className={`${inter.variable} font-display bg-[#f6f7f8] dark:bg-[#101922] text-slate-900 dark:text-slate-100 min-h-screen antialiased`}>
         <I18nProvider>

@@ -22,8 +22,8 @@ export function Sidebar() {
         <aside className="hidden lg:flex w-64 flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 fixed h-full transition-all">
             <div className="p-6">
                 <div className="flex items-center gap-3">
-                    <div className="bg-primary rounded-lg p-2 text-white">
-                        <span className="material-symbols-outlined block">admin_panel_settings</span>
+                    <div className="bg-primary rounded-lg font-black text-white w-8 h-8 flex items-center justify-center">
+                        C
                     </div>
                     <h1 className="font-bold text-xl tracking-tight">UNI Customs</h1>
                 </div>
@@ -37,8 +37,8 @@ export function Sidebar() {
                             key={href}
                             href={href}
                             className={`flex items-center px-4 py-3 rounded-lg transition-colors ${isActive
-                                    ? 'bg-primary/10 text-primary font-semibold'
-                                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                ? 'bg-primary/10 text-primary font-semibold'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                                 }`}
                         >
                             <span>{t(key)}</span>
@@ -51,11 +51,10 @@ export function Sidebar() {
                 <Link
                     href="/settings"
                     className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors ${pathname === '/settings'
-                            ? 'bg-primary/10 text-primary font-semibold'
-                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                         }`}
                 >
-                    <span className="material-symbols-outlined">settings</span>
                     <span>{t('nav.settings')}</span>
                 </Link>
             </div>
