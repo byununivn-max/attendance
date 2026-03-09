@@ -92,7 +92,8 @@
             "overtime": "초과(h)",
             "lateMins": "지각(분)",
             "earlyMins": "조퇴(분)"
-        }
+        },
+        "noData": "해당 날짜의 출결 데이터가 없습니다."
     },
     "report": {
         "title": "월별 리포트",
@@ -160,11 +161,20 @@
         "title": "직원 관리",
         "searchPlaceholder": "이름, 사번, 이메일 검색",
         "viewAttendance": "출결 보기",
+        "filterAll": "전체",
+        "mapped": "매핑됨",
+        "unmapped": "미매핑",
+        "editMapping": "매핑",
+        "device": "단말기",
+        "hikPersonId": "단말기 Person ID",
+        "saveMapping": "저장",
+        "deleteMapping": "삭제",
         "table": {
             "empCode": "사번",
             "name": "이름",
             "email": "이메일",
-            "department": "부서"
+            "department": "부서",
+            "deviceId": "단말기 ID"
         }
     }
 }

@@ -92,7 +92,8 @@
             "overtime": "Tăng ca(h)",
             "lateMins": "Đi trễ(p)",
             "earlyMins": "Về sớm(p)"
-        }
+        },
+        "noData": "Không có dữ liệu chấm công cho ngày này."
     },
     "report": {
         "title": "Báo cáo hàng tháng",
@@ -160,11 +161,20 @@
         "title": "Quản lý nhân viên",
         "searchPlaceholder": "Tìm theo tên, mã, hoặc email",
         "viewAttendance": "Xem điểm danh",
+        "filterAll": "Tất cả",
+        "mapped": "Đã liên kết",
+        "unmapped": "Chưa liên kết",
+        "editMapping": "Liên kết",
+        "device": "Thiết bị",
+        "hikPersonId": "ID người trên thiết bị",
+        "saveMapping": "Lưu",
+        "deleteMapping": "Xóa",
         "table": {
             "empCode": "Mã NV",
             "name": "Tên",
             "email": "Email",
-            "department": "Phòng ban"
+            "department": "Phòng ban",
+            "deviceId": "ID thiết bị"
         }
     }
 }

@@ -4,14 +4,6 @@ import Link from 'next/link';
 import { useTranslation } from '@/lib/i18n';
 type AS = 'NORMAL'|'LATE'|'EARLY_LEAVE'|'ABSENT'|'MISSED_PUNCH'|'PAID_LEAVE'|'HOLIDAY';
 interface AR{empCode:string;name:string;dept:string;checkIn:string;checkOut:string;workHours:number;overtime:number;lateMins:number;earlyMins:number;status:AS;}
-const mockData:AR[]=[
-  {empCode:'VN001',name:'Nguyen Van An',dept:'Logistics',checkIn:'08:02',checkOut:'17:15',workHours:9.2,overtime:0.2,lateMins:0,earlyMins:0,status:'NORMAL'},
-  {empCode:'VN002',name:'Tran Thi Binh',dept:'Ke toan',checkIn:'08:35',checkOut:'17:00',workHours:8.4,overtime:0,lateMins:35,earlyMins:0,status:'LATE'},
-  {empCode:'VN003',name:'Le Van Cuong',dept:'Kho hang A1',checkIn:'08:00',checkOut:'16:30',workHours:8.5,overtime:0,lateMins:0,earlyMins:30,status:'EARLY_LEAVE'},
-  {empCode:'VN004',name:'Pham Thi Dung',dept:'Hanh chinh',checkIn:'',checkOut:'',workHours:0,overtime:0,lateMins:0,earlyMins:0,status:'ABSENT'},
-  {empCode:'VN005',name:'Hoang Van Em',dept:'IT',checkIn:'08:05',checkOut:'',workHours:0,overtime:0,lateMins:5,earlyMins:0,status:'MISSED_PUNCH'},
-];
-const depts=['Logistics','Ke toan','Kho hang A1','Hanh chinh','IT'];
 const badge:Record<AS,string>={
   NORMAL:'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
   LATE:'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
@@ -21,10 +13,11 @@ const badge:Record<AS,string>={
 };
 export default function AttendancePage(){
   const{t}=useTranslation();
-  const[selDate,setSelDate]=useState('2026-03-07');
+  const[selDate,setSelDate]=useState(()=>new Date().toISOString().slice(0,10));
   const[selDept,setSelDept]=useState('');
-  const[data,setData]=useState<AR[]>(mockData);
-  const[loading,setLoading]=useState(false);
+  const[data,setData]=useState<AR[]>([]);
+  const[depts,setDepts]=useState<string[]>([]);
+  const[loading,setLoading]=useState(true);
 
   useEffect(()=>{
     setLoading(true);
@@ -33,8 +26,15 @@ export default function AttendancePage(){
     if(selDept) p.set('dept',selDept);
     fetch('/api/attendance?'+p.toString())
       .then(r=>r.json())
-      .then((d:unknown)=>{ if(Array.isArray(d)&&d.length>0) setData(d as AR[]); })
-      .catch(()=>{})
+      .then((d:unknown)=>{
+        const rows=Array.isArray(d)?d as AR[]:[];
+        setData(rows);
+        if(!selDept){
+          const ds=[...new Set(rows.map(r=>r.dept).filter(Boolean))].sort();
+          setDepts(ds);
+        }
+      })
+      .catch(()=>setData([]))
       .finally(()=>setLoading(false));
   },[selDate,selDept]);
 
@@ -69,6 +69,9 @@ export default function AttendancePage(){
             <th className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">{t('common.status')}</th>
           </tr></thead>
           <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+            {!loading&&filtered.length===0&&(
+              <tr><td colSpan={10} className="px-4 py-12 text-center text-slate-400">{t('attendance.noData')}</td></tr>
+            )}
             {filtered.map(r=>(
               <tr key={r.empCode} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                 <td className="px-4 py-3 font-mono text-xs text-slate-500">{r.empCode}</td>

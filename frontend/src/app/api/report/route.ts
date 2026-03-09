@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     const rows = await query(
       `SELECT
         e.emp_code,
-        COALESCE(e.full_name, e.emp_name) AS name,
+        COALESCE(e.scim_display_name, e.full_name, e.emp_name) AS name,
         COALESCE(e.department, '') AS dept,
         COUNT(*)::int AS work_days,
         COUNT(*) FILTER (WHERE ds.attendance_status = 'NORMAL')::int AS normal_days,
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
       JOIN atd_device_employee_map dem ON dem.emp_id = e.emp_id
       WHERE EXTRACT(YEAR FROM ds.work_date) = $1
         AND EXTRACT(MONTH FROM ds.work_date) = $2
-      GROUP BY e.emp_id, e.emp_code, e.emp_name, e.full_name, e.department
+      GROUP BY e.emp_id, e.emp_code, e.scim_display_name, e.emp_name, e.full_name, e.department
       ORDER BY e.emp_code`,
       [year, month]
     );

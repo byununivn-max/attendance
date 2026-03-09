@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   try {
     const rows = await query(
       `SELECT
-        e.emp_code AS "empCode", COALESCE(e.full_name, e.emp_name) AS name,
+        e.emp_code AS "empCode", COALESCE(e.scim_display_name, e.full_name, e.emp_name) AS name,
         COALESCE(e.department, '') AS dept,
         TO_CHAR(ds.actual_check_in, 'HH24:MI') AS "checkIn",
         TO_CHAR(ds.actual_check_out, 'HH24:MI') AS "checkOut",
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       JOIN atd_device_employee_map dem ON dem.emp_id = e.emp_id
       WHERE ds.work_date = $1
         AND ($2 = '' OR COALESCE(e.department, '') = $2)
-      GROUP BY e.emp_id, e.emp_code, e.full_name, e.emp_name, e.department,
+      GROUP BY e.emp_id, e.emp_code, e.scim_display_name, e.full_name, e.emp_name, e.department,
                ds.actual_check_in, ds.actual_check_out, ds.working_minutes,
                ds.overtime_minutes, ds.late_minutes, ds.early_leave_minutes, ds.attendance_status
       ORDER BY e.emp_code`,

@@ -92,7 +92,8 @@
             "overtime": "Overtime(h)",
             "lateMins": "Late(m)",
             "earlyMins": "Early(m)"
-        }
+        },
+        "noData": "No attendance data for this date."
     },
     "report": {
         "title": "Monthly Report",
@@ -160,11 +161,20 @@
         "title": "Employee Management",
         "searchPlaceholder": "Search by name, ID, or email",
         "viewAttendance": "Attendance",
+        "filterAll": "All",
+        "mapped": "Mapped",
+        "unmapped": "Unmapped",
+        "editMapping": "Mapping",
+        "device": "Device",
+        "hikPersonId": "Device Person ID",
+        "saveMapping": "Save",
+        "deleteMapping": "Delete",
         "table": {
             "empCode": "Emp ID",
             "name": "Name",
             "email": "Email",
-            "department": "Department"
+            "department": "Department",
+            "deviceId": "Device ID"
         }
     }
 }
