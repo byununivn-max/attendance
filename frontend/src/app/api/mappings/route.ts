@@ -8,7 +8,7 @@ export async function GET() {
       `SELECT dem.map_id AS "mapId", dem.device_id AS "deviceId",
         d.device_name AS "deviceName", dem.hikvision_pid AS "hikPersonId",
         dem.emp_id AS "empId", e.emp_code AS "empCode",
-        COALESCE(e.scim_display_name, e.full_name, e.emp_name) AS "empName",
+        COALESCE(e.display_name, e.full_name, e.emp_name) AS "empName",
         COALESCE(e.email, '') AS email, dem.is_active AS "isActive"
        FROM atd_device_employee_map dem
        JOIN com_employee e ON e.emp_id = dem.emp_id

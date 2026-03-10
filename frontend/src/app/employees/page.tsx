@@ -33,7 +33,7 @@ export default function EmployeesPage() {
   useEffect(() => {
     loadData();
     fetch('/api/devices').then(r => r.json())
-      .then((d: unknown) => { if (Array.isArray(d)) setDevices((d as Device[]).map(x => ({ id: (x as Record<string, number>).id, name: (x as Record<string, string>).name }))); })
+      .then((d: unknown) => { if (Array.isArray(d)) setDevices((d as Device[]).map(x => ({ id: (x as unknown as Record<string, number>).id, name: (x as unknown as Record<string, string>).name }))); })
       .catch(() => {});
   }, [loadData]);
 

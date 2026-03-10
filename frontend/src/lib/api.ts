@@ -138,4 +138,14 @@ export const api = {
     list: () => apiFetch<Device[]>('/api/devices'),
     sync: (id: number) => apiFetch('/api/devices/' + id + '/sync', { method: 'POST' }),
   },
+  graph: {
+    sync: (type?: 'users' | 'licenses' | 'groups' | 'full') =>
+      apiFetch<{ ok: boolean; syncType: string; results: Record<string, unknown> }>(
+        '/api/graph/sync' + (type ? '?type=' + type : ''),
+        { method: 'POST' }
+      ),
+    syncHistory: () => apiFetch<Record<string, unknown>[]>('/api/graph/sync'),
+    groups: () => apiFetch<Record<string, unknown>[]>('/api/graph/groups'),
+    licenses: () => apiFetch<Record<string, unknown>[]>('/api/graph/licenses'),
+  },
 };

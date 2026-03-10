@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const rows = await query(
       `SELECT e.emp_id, e.emp_code,
-        COALESCE(e.scim_display_name, e.full_name, e.emp_name) AS name,
+        COALESCE(e.display_name, e.full_name, e.emp_name) AS name,
         COALESCE(e.email, '') AS email,
         COALESCE(e.department, '') AS department,
         dem.map_id AS "mapId",

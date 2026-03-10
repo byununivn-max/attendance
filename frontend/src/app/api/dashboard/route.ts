@@ -42,7 +42,7 @@ export async function GET() {
     );
     const pending = await query(
       `SELECT pc.correction_id AS id, e.emp_code AS "empCode",
-        COALESCE(e.scim_display_name, e.full_name, e.emp_name) AS name,
+        COALESCE(e.display_name, e.full_name, e.emp_name) AS name,
         pc.work_date AS date, pc.punch_type AS "punchType", pc.status
        FROM atd_punch_correction pc
        JOIN com_employee e ON e.emp_id = pc.emp_id
