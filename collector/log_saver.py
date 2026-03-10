@@ -4,7 +4,7 @@ Hikvision 로그 -> atd_raw_log DB 저장 모듈
 - hikvision_pid -> emp_id 매핑 사용
 """
 from datetime import datetime
-import psycopg2.extras
+import psycopg2.extras  # type: ignore
 from collector.db_conn import get_conn
 
 
@@ -31,7 +31,9 @@ def save_logs(device_id: int, raw_logs: list[dict]) -> dict:
     장치 원천 로그를 atd_raw_log에 저장.
     Returns: {'inserted': int, 'skipped': int, 'unmapped': int}
     """
-    inserted = skipped = unmapped = 0
+    inserted: int = 0
+    skipped: int = 0
+    unmapped: int = 0
 
     with get_conn() as conn, conn.cursor() as cur:
         for log in raw_logs:
@@ -39,7 +41,7 @@ def save_logs(device_id: int, raw_logs: list[dict]) -> dict:
             emp_id = resolve_emp_id(cur, device_id, hikvision_pid)
 
             if emp_id is None:
-                unmapped += 1
+                unmapped = unmapped + 1  # type: ignore
                 continue
 
             event_time_str = log.get("time", "")
@@ -68,10 +70,11 @@ def save_logs(device_id: int, raw_logs: list[dict]) -> dict:
                         "ISAPI_AcsEvent",
                     ),
                 )
-                inserted += cur.rowcount
+                if cur.rowcount and cur.rowcount > 0:  # type: ignore
+                    inserted = inserted + cur.rowcount  # type: ignore
             except Exception as e:
                 print(f"  [WARN] insert failed: {e}")
-                skipped += 1
+                skipped = skipped + 1  # type: ignore
 
         conn.commit()
 
