@@ -49,7 +49,28 @@ export async function GET() {
        WHERE pc.status = 'PENDING'
        ORDER BY pc.created_at DESC LIMIT 5`
     );
-    return NextResponse.json({ ...MOCK, ...summary, pending, date: targetDate });
+
+    // Last 7 days trend (ending on targetDate)
+    const trendRows = await query<{ work_date: string; normal: number; late: number; absent: number }>(
+      `SELECT TO_CHAR(work_date, 'YYYY-MM-DD') AS work_date,
+        COUNT(*) FILTER (WHERE attendance_status = 'NORMAL')::int AS normal,
+        COUNT(*) FILTER (WHERE attendance_status = 'LATE')::int AS late,
+        COUNT(*) FILTER (WHERE attendance_status = 'ABSENT')::int AS absent
+       FROM atd_daily_summary
+       WHERE work_date BETWEEN ($1::date - interval '6 days') AND $1::date
+       GROUP BY work_date ORDER BY work_date`,
+      [targetDate]
+    );
+    const dayLabels = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'today'];
+    // Map last 7 calendar days to fixed slots (older → mon..sat, newest → today)
+    const weeklyTrend = trendRows.slice(-7).map((r, i, arr) => ({
+      day: i === arr.length - 1 ? 'today' : dayLabels[i],
+      normal: r.normal,
+      late: r.late,
+      absent: r.absent,
+    }));
+
+    return NextResponse.json({ ...summary, weeklyTrend: weeklyTrend.length ? weeklyTrend : MOCK.weeklyTrend, pending, date: targetDate });
   } catch {
     return NextResponse.json({ ...MOCK, date: new Date().toISOString().slice(0, 10), _mock: true });
   }

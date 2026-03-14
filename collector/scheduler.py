@@ -8,17 +8,32 @@ import datetime
 import schedule
 import time
 
-from config import DEVICES, TIMEZONE
+from config import DEVICE_USERNAME, DEVICE_PASSWORD, TIMEZONE
 from collector.hikvision_client import HikvisionClient
 from collector.log_saver import save_logs
 from collector.db_conn import get_conn
 
 
-def get_device_id(device_ip: str) -> int | None:
+def get_active_devices() -> list[dict]:
+    """DB에서 ACTIVE 상태의 HCMC 장치 목록을 로드.
+    HN office 장치는 collect_hn.py (하노이 PC)에서 별도 수집."""
     with get_conn() as conn, conn.cursor() as cur:
-        cur.execute("SELECT device_id FROM atd_device WHERE device_ip = %s AND status = 'ACTIVE'", (device_ip,))
-        row = cur.fetchone()
-        return row[0] if row else None
+        cur.execute(
+            "SELECT device_id, device_name, device_ip, port FROM atd_device "
+            "WHERE status = 'ACTIVE' AND (location IS NULL OR location != 'HN office')"
+        )
+        rows = cur.fetchall()
+        return [
+            {
+                "id": r[0],
+                "name": r[1],
+                "ip": r[2],
+                "port": r[3] or 80,
+                "username": DEVICE_USERNAME,
+                "password": DEVICE_PASSWORD,
+            }
+            for r in rows
+        ]
 
 
 def collect_date(target_date: datetime.date):
@@ -29,15 +44,15 @@ def collect_date(target_date: datetime.date):
 
     print(f"\n[Collect] {target_date} | {start} ~ {end}")
 
-    for device_cfg in DEVICES:
-        device_id = get_device_id(device_cfg["ip"])
-        if device_id is None:
-            print(f"  [SKIP] Device {device_cfg['ip']} not registered in DB")
-            continue
+    devices = get_active_devices()
+    if not devices:
+        print("  [WARN] No active devices found in DB")
+        return
 
+    for device_cfg in devices:
         client = HikvisionClient(device_cfg)
         logs   = client.get_attendance_logs(start, end)
-        result = save_logs(device_id, logs)
+        result = save_logs(device_cfg["id"], logs)
         print(f"  [{device_cfg['name']}] inserted={result['inserted']} skipped={result['skipped']} unmapped={result['unmapped']}")
 
 

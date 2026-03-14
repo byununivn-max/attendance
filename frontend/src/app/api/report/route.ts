@@ -24,9 +24,9 @@ export async function GET(request: Request) {
         ROUND(COALESCE(SUM(ds.overtime_minutes), 0) / 60.0, 1)::float AS overtime_hours
       FROM atd_daily_summary ds
       JOIN com_employee e ON e.emp_id = ds.emp_id
-      JOIN atd_device_employee_map dem ON dem.emp_id = e.emp_id
       WHERE EXTRACT(YEAR FROM ds.work_date) = $1
         AND EXTRACT(MONTH FROM ds.work_date) = $2
+        AND COALESCE(e.employment_status, 'ACTIVE') = 'ACTIVE'
       GROUP BY e.emp_id, e.emp_code, e.display_name, e.emp_name, e.full_name, e.department
       ORDER BY e.emp_code`,
       [year, month]

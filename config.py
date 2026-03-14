@@ -11,6 +11,7 @@ DB_CONFIG = {
     "password": os.getenv("DB_PASSWORD", ""),
 }
 
+# Legacy single-device config (kept for backward compatibility)
 DEVICES = [
     {
         "name":     os.getenv("DEVICE_NAME", "Main Entrance"),
@@ -19,6 +20,10 @@ DEVICES = [
         "password": os.getenv("DEVICE_PASSWORD", ""),
     }
 ]
+
+# Shared credentials used when loading devices from DB
+DEVICE_USERNAME = os.getenv("DEVICE_USERNAME", "admin")
+DEVICE_PASSWORD = os.getenv("DEVICE_PASSWORD", "")
 
 TIMEZONE = os.getenv("TZ", "Asia/Ho_Chi_Minh")
 MAX_RESULTS_PER_PAGE = 100

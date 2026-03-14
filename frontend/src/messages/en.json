@@ -30,6 +30,7 @@
     "nav": {
         "dashboard": "Dashboard",
         "dailyAttendance": "Daily Attendance",
+        "employeeHistory": "Employee History",
         "monthlyReport": "Monthly Report",
         "corrections": "Punch Corrections",
         "holidays": "Holidays",
@@ -82,6 +83,8 @@
         "backToList": "Back to list",
         "filterByDate": "Select Date",
         "filterByDept": "All Departments",
+        "filterByWorkplace": "All Workplaces",
+        "requestCorrection": "Correction",
         "table": {
             "empCode": "Emp ID",
             "name": "Name",
@@ -91,7 +94,8 @@
             "workHours": "Work(h)",
             "overtime": "Overtime(h)",
             "lateMins": "Late(m)",
-            "earlyMins": "Early(m)"
+            "earlyMins": "Early(m)",
+            "workplace": "Workplace"
         },
         "noData": "No attendance data for this date."
     },
@@ -152,16 +156,28 @@
         "workdaySettings": "Default Work Days",
         "generalSettings": "General Settings",
         "shiftName": "Shift Name",
+        "shiftCode": "Shift Code",
         "startTime": "Start Time",
         "endTime": "End Time",
+        "lunchStart": "Lunch Start",
+        "lunchEnd": "Lunch End",
+        "gracePeriod": "Grace Period (min)",
         "minWorkHours": "Min Work Hours",
-        "saved": "Saved successfully"
+        "saved": "Saved successfully",
+        "addShift": "Add Shift",
+        "editShift": "Edit",
+        "deleteShift": "Delete",
+        "halfHalfDay": "Half-Half Day (2h)",
+        "syncHistory": "Sync History",
+        "viewLicenses": "View Licenses",
+        "viewGroups": "View Groups"
     },
     "employees": {
         "title": "Employee Management",
         "searchPlaceholder": "Search by name, ID, or email",
         "viewAttendance": "Attendance",
         "filterAll": "All",
+        "filterByStatus": "All Status",
         "mapped": "Mapped",
         "unmapped": "Unmapped",
         "editMapping": "Mapping",
@@ -169,11 +185,17 @@
         "hikPersonId": "Device Person ID",
         "saveMapping": "Save",
         "deleteMapping": "Delete",
+        "status": {
+            "ACTIVE": "Active",
+            "RESIGNED": "Resigned",
+            "SHARED": "Shared Account"
+        },
         "table": {
             "empCode": "Emp ID",
             "name": "Name",
-            "email": "Email",
             "department": "Department",
+            "workplace": "Workplace",
+            "status": "Status",
             "deviceId": "Device ID"
         }
     }

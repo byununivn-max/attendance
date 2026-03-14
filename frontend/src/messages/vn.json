@@ -35,7 +35,8 @@
         "holidays": "Ngày lễ",
         "devices": "Thiết bị",
         "settings": "Cài đặt",
-        "employees": "Nhân viên"
+        "employees": "Nhân viên",
+        "employeeHistory": "Lịch sử chấm công"
     },
     "status": {
         "NORMAL": "Đúng giờ",
@@ -91,9 +92,12 @@
             "workHours": "Làm việc(h)",
             "overtime": "Tăng ca(h)",
             "lateMins": "Đi trễ(p)",
-            "earlyMins": "Về sớm(p)"
+            "earlyMins": "Về sớm(p)",
+            "workplace": "Nơi làm việc"
         },
-        "noData": "Không có dữ liệu chấm công cho ngày này."
+        "noData": "Không có dữ liệu chấm công cho ngày này.",
+        "filterByWorkplace": "Tất cả nơi làm việc",
+        "requestCorrection": "Yêu cầu chỉnh sửa"
     },
     "report": {
         "title": "Báo cáo hàng tháng",
@@ -155,7 +159,18 @@
         "startTime": "Giờ vào",
         "endTime": "Giờ ra",
         "minWorkHours": "Giờ tối thiểu",
-        "saved": "Đã lưu thành công"
+        "saved": "Đã lưu thành công",
+        "addShift": "Thêm ca",
+        "editShift": "Sửa",
+        "deleteShift": "Xóa",
+        "shiftCode": "Mã ca",
+        "lunchStart": "Bắt đầu nghỉ trưa",
+        "lunchEnd": "Kết thúc nghỉ trưa",
+        "gracePeriod": "Thời gian cho phép(phút)",
+        "halfHalfDay": "Nửa nửa ngày (2h)",
+        "syncHistory": "Lịch sử đồng bộ",
+        "viewLicenses": "Xem giấy phép",
+        "viewGroups": "Xem nhóm"
     },
     "employees": {
         "title": "Quản lý nhân viên",
@@ -172,9 +187,16 @@
         "table": {
             "empCode": "Mã NV",
             "name": "Tên",
-            "email": "Email",
             "department": "Phòng ban",
-            "deviceId": "ID thiết bị"
+            "deviceId": "ID thiết bị",
+            "workplace": "Nơi làm việc",
+            "status": "Trạng thái"
+        },
+        "filterByStatus": "Tất cả trạng thái",
+        "status": {
+            "ACTIVE": "Đang làm việc",
+            "RESIGNED": "Đã nghỉ việc",
+            "SHARED": "Tài khoản chung"
         }
     }
 }

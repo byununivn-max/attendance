@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from '@/lib/i18n';
 type AS = 'NORMAL'|'LATE'|'EARLY_LEAVE'|'ABSENT'|'MISSED_PUNCH'|'PAID_LEAVE'|'HOLIDAY';
-interface AR{empCode:string;name:string;dept:string;checkIn:string;checkOut:string;workHours:number;overtime:number;lateMins:number;earlyMins:number;status:AS;}
+interface AR{empCode:string;name:string;dept:string;checkIn:string;checkOut:string;workHours:number;overtime:number;lateMins:number;earlyMins:number;status:AS;workplace:string;}
 const badge:Record<AS,string>={
   NORMAL:'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
   LATE:'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
@@ -15,8 +15,10 @@ export default function AttendancePage(){
   const{t}=useTranslation();
   const[selDate,setSelDate]=useState(()=>new Date().toISOString().slice(0,10));
   const[selDept,setSelDept]=useState('');
+  const[selWorkplace,setSelWorkplace]=useState('');
   const[data,setData]=useState<AR[]>([]);
   const[depts,setDepts]=useState<string[]>([]);
+  const[workplaces,setWorkplaces]=useState<string[]>([]);
   const[loading,setLoading]=useState(true);
 
   useEffect(()=>{
@@ -24,6 +26,7 @@ export default function AttendancePage(){
     const p=new URLSearchParams();
     p.set('date',selDate);
     if(selDept) p.set('dept',selDept);
+    if(selWorkplace) p.set('workplace',selWorkplace);
     fetch('/api/attendance?'+p.toString())
       .then(r=>r.json())
       .then((d:unknown)=>{
@@ -33,12 +36,16 @@ export default function AttendancePage(){
           const ds=[...new Set(rows.map(r=>r.dept).filter(Boolean))].sort();
           setDepts(ds);
         }
+        if(!selWorkplace){
+          const ws=[...new Set(rows.map(r=>r.workplace).filter(Boolean))].sort();
+          setWorkplaces(ws);
+        }
       })
       .catch(()=>setData([]))
       .finally(()=>setLoading(false));
-  },[selDate,selDept]);
+  },[selDate,selDept,selWorkplace]);
 
-  const filtered=data.filter(r=>!selDept||r.dept===selDept);
+  const filtered=data.filter(r=>(!selDept||r.dept===selDept)&&(!selWorkplace||r.workplace===selWorkplace));
   return(
     <div className="p-4 lg:p-8 space-y-6">
       <div className="flex items-center justify-between">
@@ -56,6 +63,10 @@ export default function AttendancePage(){
           <option value="">{t('attendance.filterByDept')}</option>
           {depts.map(d=><option key={d} value={d}>{d}</option>)}
         </select>
+        <select value={selWorkplace} onChange={e=>setSelWorkplace(e.target.value)} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm outline-none">
+          <option value="">{t('attendance.filterByWorkplace')}</option>
+          {workplaces.map(w=><option key={w} value={w}>{w}</option>)}
+        </select>
       </div>
       <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         {loading&&<div className="p-4 text-center text-sm text-slate-400">{t('common.loading')}</div>}
@@ -66,11 +77,12 @@ export default function AttendancePage(){
                 {t('attendance.table.'+c)}
               </th>
             ))}
+            <th className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">{t('attendance.table.workplace')}</th>
             <th className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">{t('common.status')}</th>
           </tr></thead>
           <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
             {!loading&&filtered.length===0&&(
-              <tr><td colSpan={10} className="px-4 py-12 text-center text-slate-400">{t('attendance.noData')}</td></tr>
+              <tr><td colSpan={11} className="px-4 py-12 text-center text-slate-400">{t('attendance.noData')}</td></tr>
             )}
             {filtered.map(r=>(
               <tr key={r.empCode} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
@@ -83,6 +95,7 @@ export default function AttendancePage(){
                 <td className="px-4 py-3">{r.overtime>0?r.overtime.toFixed(1):'-'}</td>
                 <td className="px-4 py-3">{r.lateMins>0?r.lateMins:'-'}</td>
                 <td className="px-4 py-3">{r.earlyMins>0?r.earlyMins:'-'}</td>
+                <td className="px-4 py-3 text-slate-500 text-xs">{r.workplace||'-'}</td>
                 <td className="px-4 py-3"><span className={'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium '+badge[r.status]}>{t('status.'+r.status)}</span></td>
               </tr>
             ))}

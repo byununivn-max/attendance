@@ -8,6 +8,7 @@ const navItems = [
     { href: '/', icon: 'dashboard', key: 'nav.dashboard' },
     { href: '/employees', icon: 'group', key: 'nav.employees' },
     { href: '/attendance', icon: 'calendar_today', key: 'nav.dailyAttendance' },
+    { href: '/attendance/history', icon: 'person_search', key: 'nav.employeeHistory' },
     { href: '/report', icon: 'bar_chart', key: 'nav.monthlyReport' },
     { href: '/corrections', icon: 'edit_calendar', key: 'nav.corrections' },
     { href: '/holidays', icon: 'holiday_village', key: 'nav.holidays' },

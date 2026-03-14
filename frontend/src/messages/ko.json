@@ -35,7 +35,8 @@
         "holidays": "공휴일 관리",
         "devices": "장치 관리",
         "settings": "시스템 설정",
-        "employees": "직원 관리"
+        "employees": "직원 관리",
+        "employeeHistory": "직원별 출결현황"
     },
     "status": {
         "NORMAL": "정상출근",
@@ -91,9 +92,12 @@
             "workHours": "근무(h)",
             "overtime": "초과(h)",
             "lateMins": "지각(분)",
-            "earlyMins": "조퇴(분)"
+            "earlyMins": "조퇴(분)",
+            "workplace": "근무지"
         },
-        "noData": "해당 날짜의 출결 데이터가 없습니다."
+        "noData": "해당 날짜의 출결 데이터가 없습니다.",
+        "filterByWorkplace": "근무지 전체",
+        "requestCorrection": "보정 신청"
     },
     "report": {
         "title": "월별 리포트",
@@ -155,7 +159,18 @@
         "startTime": "출근 시각",
         "endTime": "퇴근 시각",
         "minWorkHours": "최소 근무시간",
-        "saved": "저장되었습니다"
+        "saved": "저장되었습니다",
+        "addShift": "시프트 추가",
+        "editShift": "수정",
+        "deleteShift": "삭제",
+        "shiftCode": "시프트 코드",
+        "lunchStart": "점심 시작",
+        "lunchEnd": "점심 종료",
+        "gracePeriod": "유예시간(분)",
+        "halfHalfDay": "반반차 (2시간)",
+        "syncHistory": "동기화 이력",
+        "viewLicenses": "라이선스 보기",
+        "viewGroups": "그룹 보기"
     },
     "employees": {
         "title": "직원 관리",
@@ -172,9 +187,16 @@
         "table": {
             "empCode": "사번",
             "name": "이름",
-            "email": "이메일",
             "department": "부서",
-            "deviceId": "단말기 ID"
+            "deviceId": "단말기 ID",
+            "workplace": "근무지",
+            "status": "상태"
+        },
+        "filterByStatus": "상태 전체",
+        "status": {
+            "ACTIVE": "근무중",
+            "RESIGNED": "퇴사",
+            "SHARED": "공용계정"
         }
     }
 }

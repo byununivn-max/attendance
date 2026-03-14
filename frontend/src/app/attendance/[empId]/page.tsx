@@ -70,6 +70,7 @@ export default function EmpDetailPage({ params }: { params: { empId: string } })
             {['common.date','attendance.table.checkIn','attendance.table.checkOut','attendance.table.workHours','attendance.table.overtime','attendance.table.lateMins','common.status'].map(k=>(
               <th key={k} className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">{t(k)}</th>
             ))}
+            <th className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">{t('common.action')}</th>
           </tr></thead>
           <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
             {detail.records.map(r=>(
@@ -81,6 +82,13 @@ export default function EmpDetailPage({ params }: { params: { empId: string } })
                 <td className="px-4 py-3">{r.overtime>0?r.overtime.toFixed(1):'-'}</td>
                 <td className="px-4 py-3">{r.lateMins>0?r.lateMins:'-'}</td>
                 <td className="px-4 py-3"><span className={'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium '+(badge[r.status]||'')}>{t('status.'+r.status)}</span></td>
+                <td className="px-4 py-3">
+                  <Link href={'/corrections/new?emp='+detail.empCode+'&date='+r.date}
+                    className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-primary hover:underline">
+                    <span className="material-symbols-outlined text-sm">edit_calendar</span>
+                    {t('attendance.requestCorrection')}
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
